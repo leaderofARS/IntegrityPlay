@@ -1,0 +1,11 @@
+{
+  "total_events": 100,
+  "by_type": {
+    "order": 50,
+    "trade": 25,
+    "custody_transfer": 1,
+    "cancel": 24
+  },
+  "first_event_ts": "2025-09-04T00:00:00.200000Z",
+  "last_event_ts": "2025-09-04T00:00:22.300000Z"
+}
