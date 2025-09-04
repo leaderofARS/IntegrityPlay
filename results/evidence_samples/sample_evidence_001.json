@@ -1,0 +1,98 @@
+{
+  "evidence_id": "EV-0001",
+  "detected_at": "2025-09-04T07:12:23Z",
+  "scenario": "wash_trade",
+  "summary": "High-confidence wash trade detected between ACC-WASH-MAKER and ACC-WASH-TAKER on instrument ABC.",
+  "events": [
+    {
+      "ts": "2025-09-04T07:10:02Z",
+      "type": "order",
+      "instrument": "ABC",
+      "account": "ACC-WASH-MAKER",
+      "side": "buy",
+      "qty": 100,
+      "price": 100.0,
+      "order_ref": "ORD-W-0001",
+      "meta": {
+        "venue": "SIMEX"
+      }
+    },
+    {
+      "ts": "2025-09-04T07:10:03Z",
+      "type": "cancel",
+      "instrument": "ABC",
+      "account": "ACC-WASH-MAKER",
+      "order_ref": "ORD-W-0001",
+      "meta": {
+        "reason": "immediate_cancel"
+      }
+    },
+    {
+      "ts": "2025-09-04T07:10:05Z",
+      "type": "order",
+      "instrument": "ABC",
+      "account": "ACC-WASH-TAKER",
+      "side": "sell",
+      "qty": 100,
+      "price": 100.0,
+      "order_ref": "ORD-T-0001",
+      "meta": {
+        "venue": "SIMEX"
+      }
+    },
+    {
+      "ts": "2025-09-04T07:10:06Z",
+      "type": "trade",
+      "instrument": "ABC",
+      "buy_account": "ACC-WASH-MAKER",
+      "sell_account": "ACC-WASH-TAKER",
+      "qty": 100,
+      "price": 100.0,
+      "related_to": {
+        "buy_order": "ORD-W-0001",
+        "sell_order": "ORD-T-0001"
+      },
+      "meta": {
+        "venue": "SIMEX"
+      }
+    },
+    {
+      "ts": "2025-09-04T07:10:10Z",
+      "type": "custody_transfer",
+      "instrument": "ABC",
+      "from": "ACC-WASH-TAKER",
+      "to": "ACC-WASH-MAKER",
+      "qty": 100,
+      "meta": {
+        "note": "position_reconsolidation"
+      }
+    }
+  ],
+  "contributing_signals": {
+    "round_trip_rate": 0.96,
+    "beneficiary_churn": 0.9,
+    "immediate_cancel_ratio": 0.82,
+    "network_cluster_score": 0.98
+  },
+  "investigator_actions": [
+    {
+      "action": "quarantine_accounts",
+      "accounts": [
+        "ACC-WASH-MAKER",
+        "ACC-WASH-TAKER"
+      ],
+      "reason": "high_risk_cluster"
+    },
+    {
+      "action": "flag_for_settlement_hold",
+      "accounts": [
+        "ACC-WASH-MAKER",
+        "ACC-WASH-TAKER"
+      ],
+      "reason": "self-trade evidence"
+    }
+  ],
+  "sha256_fingerprint": "",
+  "anchor": {},
+  "narrative": "Between 07:10:02 and 07:10:10 UTC, account ACC-WASH-MAKER performed repeated buy orders with immediate cancels followed by a matched trade with ACC-WASH-TAKER. The pattern indicates self-trading (wash trade) to inflate volume. Recommend immediate suspension of settlement and forensic inquiry."
+}
