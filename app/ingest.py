@@ -138,7 +138,13 @@ class _WebhookHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"Received\\n")
 
     def log_message(self, format, *args):
-        sys.stderr.write("%s - - [%s] %s\\n" % (self.address_string(), self.log_date_time_string(), format%args))
+        # Maintain BaseHTTPRequestHandler formatting semantics; suppress UP031 here
+        msg = "%s - - [%s] %s\n" % (
+            self.address_string(),
+            self.log_date_time_string(),
+            (format % args),
+        )
+        sys.stderr.write(msg)  # noqa: UP031
 
 def start_webhook_server(port: int, handler_func, bind_address: str = "0.0.0.0"):
     server = ThreadingHTTPServer((bind_address, port), _WebhookHandler)
@@ -233,7 +239,7 @@ def _enrich_and_write_alert(a: Dict[str, Any], anchor: bool = False):
     # write narrative text if generator exists
     try:
         if generate_alert_text is not None:
-            text = generate_alert_text(a, signals_map)
+            _ = generate_alert_text(a, signals_map)
             txtpath = os.path.join(out_dir, f"{alert_id}.txt")
             write_alert_summary(a, signals_map, txtpath)
     except Exception as e:

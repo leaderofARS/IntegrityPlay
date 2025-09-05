@@ -51,10 +51,8 @@ from dataclasses import dataclass, asdict
 
 try:
     import plotly.graph_objects as go
-    import plotly.express as px
     from plotly.subplots import make_subplots
     import networkx as nx
-    from plotly.offline import plot
     HAVE_VISUALIZATION = True
 except ImportError:
     HAVE_VISUALIZATION = False

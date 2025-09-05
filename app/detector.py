@@ -189,7 +189,7 @@ class Detector:
         order_ref = ev.get("order_ref") or ev.get("id") or f"ORD-{uuid.uuid4().hex[:8]}"
         account = ev.get("account") or ev.get("meta", {}).get("account") or None
         instrument = ev.get("instrument") or ev.get("symbol") or "UNKNOWN"
-        side = ev.get("side") or None
+        _side = ev.get("side") or None
 
         # store order
         ev_copy = dict(ev)
@@ -243,7 +243,7 @@ class Detector:
         else:
             buy_ref = sell_ref = None
 
-        qty = ev.get("qty") or ev.get("quantity") or 0
+        _qty = ev.get("qty") or ev.get("quantity") or 0
         instrument = ev.get("instrument") or ev.get("symbol") or "UNKNOWN"
 
         # update account stats
@@ -278,7 +278,7 @@ class Detector:
         # custody transfer has 'meta': { 'from': 'ACC-A', 'to': 'ACC-B' } or top-level 'from'/'to'
         frm = ev.get("meta", {}).get("from") or ev.get("from") or ev.get("meta", {}).get("sender")
         to = ev.get("meta", {}).get("to") or ev.get("to") or ev.get("meta", {}).get("receiver")
-        instrument = ev.get("instrument") or ev.get("symbol") or None
+        _instrument = ev.get("instrument") or ev.get("symbol") or None
         if frm and to:
             self.graph.add_edge(frm, to)
             # treat custody shuffle as potential obfuscation: increment churn metric
@@ -293,7 +293,7 @@ class Detector:
         """
         s = self.account_stats.get(account, {})
         total_orders = max(1, s.get("orders", 0))
-        cancels = s.get("cancels", 0)
+        _cancels = s.get("cancels", 0)
         trades = s.get("trades", 0)
 
         # immediate cancel ratio: fraction of recent orders that were immediate cancels

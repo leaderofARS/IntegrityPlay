@@ -178,7 +178,6 @@ def run_ingest_on_file(db: Session, events_path: str, run_detector: bool = True,
     # Update demo metrics (naive)
     try:
         from .main import _metrics
-        now = time.time()
         # simulate eps ~ emitted per second over small window
         _metrics['alerts_emitted'] = _metrics.get('alerts_emitted', 0) + len(emitted)
         _metrics['eps'] = round(5.0 + random.random() * 10.0, 2)

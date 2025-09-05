@@ -41,9 +41,9 @@ import base64
 from io import BytesIO
 
 try:
-    import shap
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+    import shap as _shap
+    import matplotlib.pyplot as _plt
+    import seaborn as _sns
     HAVE_EXPLAINABILITY = True
 except ImportError:
     HAVE_EXPLAINABILITY = False

@@ -2,6 +2,7 @@ from __future__ import annotations
 import asyncio
 import json
 from typing import Optional
+from datetime import datetime
 
 from fastapi import Depends, FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Header
 from fastapi.middleware.cors import CORSMiddleware
@@ -314,7 +315,7 @@ async def get_case(case_id: str, db: Session = Depends(get_db), auth: None = Dep
     if c is None:
         raise HTTPException(status_code=404, detail="Case not found")
     comments = [cc.to_dict() for cc in c.comments]
-    links = [ {"alert_id": l.alert_id} for l in c.links]
+    links = [ {"alert_id": link.alert_id} for link in c.links]
     return {**c.to_dict(), "comments": comments, "links": links}
 
 @app.post("/api/cases/{case_id}/assign", response_model=CaseBase)
