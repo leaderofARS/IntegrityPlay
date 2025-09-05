@@ -139,12 +139,12 @@ class _WebhookHandler(BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         # Maintain BaseHTTPRequestHandler formatting semantics; suppress UP031 here
-        msg = "%s - - [%s] %s\n" % (
+        msg = "%s - - [%s] %s\n" % (  # noqa: UP031
             self.address_string(),
             self.log_date_time_string(),
             (format % args),
         )
-        sys.stderr.write(msg)  # noqa: UP031
+        sys.stderr.write(msg)
 
 def start_webhook_server(port: int, handler_func, bind_address: str = "0.0.0.0"):
     server = ThreadingHTTPServer((bind_address, port), _WebhookHandler)
