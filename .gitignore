@@ -87,3 +87,7 @@ logs/
 log/
 tmp/
 temp/
+
+
+.gitignore
+
