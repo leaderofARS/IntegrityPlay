@@ -1,4 +1,3 @@
-
 from typing import List, Set, Tuple, Dict, Any, Optional
 from collections import defaultdict, Counter, deque
 import os
@@ -23,7 +22,7 @@ Design goals (hackathon-ready):
 
 How to use (quick):
     # create adapter and build from events file
-    from app.graph_adapter import InMemoryGraphAdapter, build_graph_from_events_file
+    from app.graph_adaptor import InMemoryGraphAdapter, build_graph_from_events_file
     g = InMemoryGraphAdapter()
     build_graph_from_events_file('results/demo_run/events.jsonl', g)
 
@@ -118,6 +117,7 @@ class InMemoryGraphAdapter(BaseGraphAdapter):
                     if nb not in nodes:
                         newf.add(nb)
                         nodes.add(nb)
+            frontier = newf
         edges = []
         for a in nodes:
             for b, w in self.adj.get(a, {}).items():
@@ -154,7 +154,6 @@ class InMemoryGraphAdapter(BaseGraphAdapter):
         lines.append("}")
         with open(outpath, "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
-        lines.append("}")
 
 def build_graph_from_events_file(path: str, graph_adapter: BaseGraphAdapter, verbose: bool = False):
     if not os.path.exists(path):
@@ -187,3 +186,7 @@ def build_graph_from_events(events, graph_adapter: BaseGraphAdapter, verbose: bo
         graph_adapter.add_edge(a, b, w)
     if verbose:
         print("Graph built: nodes=", len(graph_adapter.nodes()))
+
+def detect_graph_patterns(events):
+    """Placeholder: could plug in NetworkX/Neo4j for anomaly graphs"""
+    return {"suspicious_clusters": []}

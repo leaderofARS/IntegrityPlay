@@ -32,6 +32,9 @@ def verify_signature(model: Dict[str, Any], signature: str, key: Optional[str] =
     expected = sign_model(model, key=key)
     return expected == signature
 
+def send_to_regulator(alert):
+    print("[Federated Stub] Would send alert to SEBI/BSE sandbox")
+
 def demo():
     print("Federated stubs demo")
     u1 = {'weights': {'w1': 0.1, 'w2': 0.2}, 'meta':{'node':'n1'}}

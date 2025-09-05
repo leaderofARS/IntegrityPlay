@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #f8fafc;
+}
+
+* { box-sizing: border-box; }
+

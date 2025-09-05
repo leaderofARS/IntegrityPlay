@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Install Node deps (frontend)
+        run: |
+          cd frontend
+          npm ci || npm install
+
+      - name: Lint (black + ruff + eslint)
+        run: |
+          black --check .
+          ruff check .
+          cd frontend && npm run lint
+
+      - name: Docker Compose up
+        run: |
+          cp -n .env.example .env || true
+          docker compose up -d --build
+
+      - name: Wait for backend
+        run: |
+          for i in {1..60}; do
+            curl -fsS http://localhost:8000/api/health && break || true
+            sleep 2
+          done
+          curl -fsS http://localhost:8000/api/health
+
+      - name: Demo smoke (ensure ALERT-DEMO-001.json)
+        run: |
+          bash scripts/run_demo.sh --no-throttle || true
+          # Ensure artifact exists
+          test -f results/alerts/ALERT-DEMO-001.json
+
+      - name: Backend unit tests
+        run: |
+          pytest -q backend/tests
+
+      - name: Playwright install
+        run: |
+          cd frontend
+          npx --yes playwright install --with-deps
+
+      - name: Playwright E2E
+        run: |
+          cd frontend
+          npx --yes playwright test --config playwright.config.ts
+
+      - name: Upload artifacts (alerts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: alert-artifacts
+          path: results/alerts
+

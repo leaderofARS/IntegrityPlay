@@ -1,0 +1,89 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Test/cache
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+.vs/
+
+# Build/dist
+build/
+dist/
+pip-wheel-metadata/
+
+# Project outputs
+# Ignore all generated results (alerts, evidence, chains, demo artifacts)
+results/
+# Keep the directory markers
+!results/.gitkeep
+!results/README.md
+
+# Node (if frontend added later)
+node_modules/
+# Next.js export/output
+out/
+
+# Logs
+*.log
+
+# Secrets and environment
+.env
+.env.*
+!.env.example
+!.env.*.example
+.envrc
+.npmrc
+.pypirc
+
+# Keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ecdsa
+*.keystore
+*.jks
+
+# Databases and local data
+*.sqlite
+*.sqlite3
+*.db
+
+# Python tooling extras
+htmlcov/
+.coverage.*
+.ruff_cache/
+.pytype/
+.hypothesis/
+*.egg-info/
+coverage/
+
+# Node/JS tooling extras
+.next/
+.parcel-cache/
+.cache/
+.turbo/
+.vercel/
+playwright-report/
+test-results/
+
+# OS
+Thumbs.db
+
+# Logs and temp dirs
+logs/
+log/
+tmp/
+temp/
