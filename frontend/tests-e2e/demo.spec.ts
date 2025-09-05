@@ -10,7 +10,7 @@ test('demo flow: run -> list -> detail', async ({ page }) => {
   // Navigate to alerts
   await page.goto(`${BASE_URL}/alerts`);
   // Wait for at least one alert row to show
-  await expect(page.locator('table tbody tr')).toHaveCountGreaterThan(0, { timeout: 30000 } as any);
+  await expect(page.locator('table tbody tr').first()).toBeVisible({ timeout: 30000 });
   const firstAlert = page.locator('table tbody tr').first();
   const idText = await firstAlert.locator('td').first().innerText();
   await firstAlert.click();
