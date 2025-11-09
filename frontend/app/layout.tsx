@@ -1,18 +1,28 @@
-import './globals.css';
-import { ReactNode } from 'react';
-import TopNav from '../components/TopNav';
-import Providers from './providers';
+import type { Metadata } from 'next'
+import './globals.css'
+import { Providers } from './providers'
+import { TopNav } from '@/components/TopNav'
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export const metadata: Metadata = {
+  title: 'IntegrityPlay - AI-Powered Market Surveillance',
+  description: 'Enterprise-grade real-time market surveillance with explainable AI',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-gray-50 text-gray-900">
+      <body className="min-h-screen bg-gradient-dark">
         <Providers>
           <TopNav />
-          <main className="max-w-7xl mx-auto p-4">{children}</main>
+          <main className="pt-16">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
-  );
+  )
 }
-
