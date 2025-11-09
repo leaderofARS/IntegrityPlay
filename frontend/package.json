@@ -1,6 +1,6 @@
 {
-  "name": "integrityplay-frontend",
-  "version": "0.1.0",
+  "name": "integrityplay-modern",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
@@ -11,19 +11,22 @@
   },
   "dependencies": {
     "@tanstack/react-query": "5.45.0",
-    "axios": "1.6.8",
-"cytoscape": "3.26.0",
     "@types/cytoscape": "3.21.9",
-    "framer-motion": "10.16.4",
+    "axios": "^1.13.2",
+    "clsx": "2.1.0",
+    "cytoscape": "3.26.0",
+    "date-fns": "3.0.0",
+    "framer-motion": "11.0.0",
+    "jszip": "3.10.1",
     "lucide-react": "0.292.0",
-    "next": "14.2.4",
+    "next": "^14.2.33",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-"recharts": "2.10.4",
-    "jszip": "3.10.1"
+    "react-hot-toast": "2.4.1",
+    "recharts": "2.10.4"
   },
   "devDependencies": {
-    "@playwright/test": "1.45.0",
+    "@playwright/test": "^1.56.1",
     "@types/node": "20.11.19",
     "@types/react": "18.2.61",
     "@types/react-dom": "18.2.22",
@@ -36,4 +39,3 @@
     "typescript": "5.4.5"
   }
 }
-
